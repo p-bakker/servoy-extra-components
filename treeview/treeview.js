@@ -19,7 +19,12 @@ angular.module('servoyextraTreeview',['servoy']).directive('servoyextraTreeview'
 		$scope.$watch('model.jsDataSet', function(newValue) {
 			if($scope.model.jsDataSet) {
 				treeJSON = toTreeJSON($scope.model.jsDataSet);
-				initTree();
+				if(theTree) {
+					theTree.reload(treeJSON);
+				}
+				else {
+					initTree();
+				}
 			}
 		})    	
     	
@@ -60,7 +65,7 @@ angular.module('servoyextraTreeview',['servoy']).directive('servoyextraTreeview'
   			}
   			return null;
   		};
-      	  		
+
       	function toTreeJSON(jsDataSet) {
       		var fancyTreeJSON = new Array();
       		
@@ -81,6 +86,20 @@ angular.module('servoyextraTreeview',['servoy']).directive('servoyextraTreeview'
       				parentChildren = p.children;
       				p.folder = "true";
       			}
+				else if(jsDataSet[i][pidIdx] != null) {
+					// check if the parent is not yet created
+					var parentNotYetCreated = false;
+					for(var j = i + 1; j < jsDataSet.length; j++) {
+						if(jsDataSet[i][pidIdx] == jsDataSet[j][idIdx]) {
+							jsDataSet[jsDataSet.length] = jsDataSet[i];
+							parentNotYetCreated	= true;
+							break;
+						}
+					}
+					if(parentNotYetCreated) {
+						continue;
+					}
+				}
       			parentChildren.push(n);
       		}
       		

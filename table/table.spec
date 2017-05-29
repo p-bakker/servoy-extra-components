@@ -9,7 +9,7 @@
 	"model": {
 		"columns": { "type": "column[]", "droppable": true, "pushToServer": "shallow", "elementConfig": { "pushToServer": "shallow" } },
 		"currentPage": { "type": "int", "default": 1, "tags": { "scope": "runtime" }, "pushToServer": "shallow" },
-		"foundset": { "type": "foundset", "pushToServer": "allow", "initialPreferredViewPortSize": 130, "sendSelectionViewportInitially": true },
+		"foundset": { "type": "foundset","default" : {"foundsetSelector":""} , "pushToServer": "allow", "initialPreferredViewPortSize": 130, "sendSelectionViewportInitially": true },
 		"pageSize": { "type": "int", "default": 20 },
 		"styleClass": { "type": "styleclass", "tags": { "scope": "design" }, "default": "table", "values": ["table", "table-striped", "table-bordered", "table-hover", "table-condensed"] },
 		"selectionClass": { "type": "styleclass", "default": "table-servoyextra-selected " },
@@ -35,14 +35,18 @@
 			"headerText": { "type": "tagstring", "initialValue": "header", "tags": { "showInOutlineView": true } },
 			"styleClass": { "type": "styleclass" },
 			"styleClassDataprovider": { "type": "dataprovider", "forFoundset": "foundset" },
-			"valuelist": { "type": "valuelist", "tags": { "scope": "design" }, "for": "dataprovider" },
+			"valuelist": { "type": "valuelist", "for": "dataprovider" },
 			"width": { "type": "string" },
 			"initialWidth": { "type": "string", "tags": { "scope": "runtime" } },
 			"autoResize": { "type": "boolean", "default": false }
 		},
 		"settings": {
-			"minBatchSizeForRenderingMoreRows" : { "type": "int", "default": -1 }, 
-			"minBatchSizeForLoadingMoreRows" : { "type": "int", "default": -1 }
+			"minBatchSizeForRenderingMoreRows" : { "type": "int", "default": 10 }, 
+			"minBatchSizeForLoadingMoreRows" : { "type": "int", "default": 20 },
+			"maxRenderedRows" : { "type": "int", "default": 450 }, 
+			"maxLoadedRows" : { "type": "int", "default": 1000 },
+			"fastScrollRenderThresholdFactor" : { "type": "int", "default": 3.0 }, 
+			"fastScrollLoadThresholdFactor" : { "type": "int", "default": 2.3 }
 		}
 	},
 	"handlers": {
